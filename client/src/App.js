@@ -180,7 +180,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-white flex flex-col items-center justify-center p-6">
       <h1 className="text-5xl font-extrabold text-gray-800 mb-10 text-center">
         Career Visualizer <span className="text-purple-600">AI</span>
-        <div className="text-sm text-gray-500 mt-2">(Demo Mode)</div>
+        <div className="text-sm text-gray-500 mt-2">(Step Into Your Future)</div>
       </h1>
 
       <AnimatePresence mode="wait">
