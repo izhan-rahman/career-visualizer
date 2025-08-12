@@ -8,7 +8,6 @@ export default function App() {
   const [career, setCareer] = useState("");
   const [careerImage, setCareerImage] = useState(null);
   const [listening, setListening] = useState(false);
-  const [micAttempts, setMicAttempts] = useState(0);
 
   // Large career library
   const careerImages = {
@@ -36,7 +35,7 @@ export default function App() {
     softwareengineer: "/images/software_engineer.jpeg",
     fashiondesigner: "/images/fashion_designer.jpeg",
     cricketer: "/images/cricketer.jpeg",
-    footballer: "/images/cricketer.jpeg",
+    footballer: "/images/footballer.jpeg",
   };
 
   const startCamera = useCallback(async () => {
@@ -57,7 +56,6 @@ export default function App() {
     if (stream) {
       stream.getTracks().forEach((track) => track.stop());
     }
-    setMicAttempts(0);
     setStage("listen");
     startVoiceRecognition();
   };
@@ -130,12 +128,14 @@ export default function App() {
         });
         setStage("result");
       } else {
-        retryMicOrManual(detectedName);
+        // No career detected, fallback to manual input
+        setName(detectedName);
+        setStage("manual");
       }
     };
 
     recognition.onerror = () => {
-      retryMicOrManual();
+      setStage("manual");
     };
 
     recognition.onend = () => {
@@ -143,20 +143,9 @@ export default function App() {
     };
 
     recognition.start();
-    setTimeout(() => recognition.stop(), 5000);
-  };
 
-  const retryMicOrManual = (detectedName = "Student") => {
-    setMicAttempts((prev) => {
-      if (prev < 2) {
-        setTimeout(startVoiceRecognition, 500);
-        return prev + 1;
-      } else {
-        setName(detectedName);
-        setStage("manual");
-        return prev;
-      }
-    });
+    // Stop recognition after 10 seconds max
+    setTimeout(() => recognition.stop(), 10000);
   };
 
   const handleManualSubmit = (e) => {
@@ -180,7 +169,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-white flex flex-col items-center justify-center p-6">
       <h1 className="text-5xl font-extrabold text-gray-800 mb-10 text-center">
         Career Visualizer <span className="text-purple-600">AI</span>
-        <div className="text-sm text-gray-500 mt-2">(Step Into Your Future)</div>
+        <div className="text-sm text-gray-500 mt-2">(Demo Mode)</div>
       </h1>
 
       <AnimatePresence mode="wait">
@@ -222,7 +211,7 @@ export default function App() {
             className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md text-center"
           >
             <p className="text-lg font-medium mb-4">🎤 Listening... Please say your name and career</p>
-            {listening && <p className="text-sm text-gray-500">Mic is on... attempt {micAttempts + 1}/3</p>}
+            {listening && <p className="text-sm text-gray-500">Mic is on... attempt 1/1</p>}
           </motion.div>
         )}
 
