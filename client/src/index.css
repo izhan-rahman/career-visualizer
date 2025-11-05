@@ -6,3 +6,15 @@ body {
   background-color: #f9fafb;
   font-family: 'Inter', sans-serif;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    /* This long transition tricks the browser */
+    transition: background-color 5000s ease-in-out 0s;
+    /* This forces the autofilled text to be white */
+    -webkit-text-fill-color: white !important;
+}
+
+
