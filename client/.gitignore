@@ -21,3 +21,11 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+server/venv/
+
+
+# --- Python/Server Secrets & Cache ---
+server/google-creds.json
+server/venv/
+server/__pycache__/
+*.pyc
